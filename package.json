@@ -1,0 +1,25 @@
+{
+  "name": "3id-blockchain-utils",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/standard --verbose src/**",
+    "test": "jest --coverage"
+  },
+  "author": "oed",
+  "license": "MIT",
+  "dependencies": {
+    "@ethersproject/contracts": "^5.0.0-beta.140",
+    "@ethersproject/networks": "^5.0.0-beta.131",
+    "@ethersproject/providers": "^5.0.0-beta.144",
+    "@ethersproject/wallet": "^5.0.0-beta.133"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "standard": "^14.3.1"
+  }
+}

@@ -1,0 +1,41 @@
+import { ADDRESS_TYPES } from './constants'
+import ethereum from './blockchains/ethereum'
+
+const handlers = {
+  [ADDRESS_TYPES.ethereumEOA]: ethereum,
+  [ADDRESS_TYPES.erc1271]: ethereum
+}
+
+const typeDetectors = [
+  ethereum.typeDetector
+]
+
+async function detectType (address, provider) {
+  for (const detector of typeDetectors) {
+    const type = await detector(address, provider)
+    if (type) return type
+  }
+}
+
+async function createLink (did, address, provider, opts = {}) {
+  const type = opts.type || await detectType(address, provider)
+  if (!handlers[type]) throw new Error(`creating link with type ${type}, not supported`)
+  const produceProof = handlers[type].createLink
+  const proof = await produceProof(address, type, provider)
+  if (proof) {
+    return proof
+  } else {
+    throw new Error(`Unable to create proof with type ${type}`)
+  }
+}
+
+async function validateLink (proof) {
+  const validate = handlers[proof.type].validateLink
+  if (typeof validate !== 'function') throw new Error(`proof with type ${proof.type} not supported`)
+  return validate(proof)
+}
+
+export {
+  createLink,
+  validateLink
+}
