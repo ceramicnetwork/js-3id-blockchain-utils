@@ -9,4 +9,13 @@ function getConsentMessage (did, addTimestamp) {
   return res
 }
 
-export { getConsentMessage }
+function encodeRpcCall (method, params) {
+  return {
+    jsonrpc: '2.0',
+    id: 1,
+    method,
+    params
+  }
+}
+
+export { getConsentMessage, encodeRpcCall }

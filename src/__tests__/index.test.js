@@ -15,16 +15,12 @@ describe('3ID Blockchain Utils', () => {
   const testAddr = '0x12345abcde'
   const mockProvider = 'fake provider'
 
-  beforeEach(async () => {
-  })
-
   it('validateLink: should throw if type not supported', async () => {
     const proof = {
       type: 'not supported'
     }
     await expect(validateLink(proof)).rejects.toMatchSnapshot()
   })
-
 
   it('validateLink: ethereum types', async () => {
     const proof = {
@@ -50,10 +46,10 @@ describe('3ID Blockchain Utils', () => {
     ethereum.createLink.mockImplementation(() => proof)
     ethereum.typeDetector.mockImplementationOnce(() => ADDRESS_TYPES.ethereumEOA)
     expect(await createLink(testDid, testAddr, mockProvider)).toEqual(proof)
-    expect(ethereum.createLink).toHaveBeenCalledWith(testAddr, ADDRESS_TYPES.ethereumEOA, mockProvider)
+    expect(ethereum.createLink).toHaveBeenCalledWith(testDid, testAddr, ADDRESS_TYPES.ethereumEOA, mockProvider)
     ethereum.createLink.mockClear()
     ethereum.typeDetector.mockImplementationOnce(() => ADDRESS_TYPES.erc1271)
     expect(await createLink(testDid, testAddr, mockProvider)).toEqual(proof)
-    expect(ethereum.createLink).toHaveBeenCalledWith(testAddr, ADDRESS_TYPES.erc1271, mockProvider)
+    expect(ethereum.createLink).toHaveBeenCalledWith(testDid, testAddr, ADDRESS_TYPES.erc1271, mockProvider)
   })
 })

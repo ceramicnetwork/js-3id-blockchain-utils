@@ -21,7 +21,7 @@ async function createLink (did, address, provider, opts = {}) {
   const type = opts.type || await detectType(address, provider)
   if (!handlers[type]) throw new Error(`creating link with type ${type}, not supported`)
   const produceProof = handlers[type].createLink
-  const proof = await produceProof(address, type, provider)
+  const proof = await produceProof(did, address, type, provider, opts)
   if (proof) {
     return proof
   } else {

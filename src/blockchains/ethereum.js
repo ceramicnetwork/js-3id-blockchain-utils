@@ -1,17 +1,11 @@
 import { ADDRESS_TYPES } from '../constants'
-import { getConsentMessage } from '../utils'
+import { getConsentMessage, encodeRpcCall } from '../utils'
 import { verifyMessage } from '@ethersproject/wallet'
 import { Contract } from '@ethersproject/contracts'
 import * as providers from "@ethersproject/providers";
 
 const ERC1271_ABI = [ 'function isValidSignature(bytes _messageHash, bytes _signature) public view returns (bytes4 magicValue)' ]
 const MAGIC_ERC1271_VALUE = '0x20c13b0b'
-const encodeRpcCall = (method, params) => ({
-  jsonrpc: '2.0',
-  id: 1,
-  method,
-  params
-})
 const isEthAddress = address => /^0x[a-fA-F0-9]{40}$/.test(address)
 
 
@@ -44,22 +38,23 @@ async function safeSend (data, provider) {
   })
 }
 
-async function createEthLink (address, provider) {
-  const { message, timestamp } = getConsentMessage(did, true)
+async function createEthLink (did, address, provider, opts = {}) {
+  const { message, timestamp } = getConsentMessage(did, !opts.skipTimestamp)
   const payload = encodeRpcCall('personal_sign', [message, address])
   const signature = await safeSend(payload, provider)
-  return {
+  const proof = {
     version: 1,
     type: ADDRESS_TYPES.ethereumEOA,
     message,
-    timestamp,
     signature,
     address
   }
+  if (!opts.skipTimestamp) proof.timestamp = timestamp
+  return proof
 }
 
-async function createErc1271Link (address, provider) {
-  const res = await createEthLink(address, provider)
+async function createErc1271Link (did, address, provider, opts) {
+  const res = await createEthLink(did, address, provider, opts)
   const chainId = await getChainId(provider)
   return Object.assign(res, {
     type: ADDRESS_TYPES.erc1271,
@@ -78,17 +73,17 @@ async function typeDetector (address, provider) {
   return ADDRESS_TYPES.erc1271
 }
 
-async function createLink (address, type, provider) {
+async function createLink (did, address, type, provider, opts) {
   address = address.toLowerCase()
   if (type === ADDRESS_TYPES.ethereumEOA) {
-    return createEthLink(address, provider)
+    return createEthLink(did, address, provider, opts)
   } else if (type === ADDRESS_TYPES.erc1271) {
-    return createErc1271Link(address, provider)
+    return createErc1271Link(did, address, provider, opts)
   }
 }
 
 async function validateEoaLink (proof) {
-  const recoveredAddr = verifyMessage(proof.message, proof.signature)
+  const recoveredAddr = verifyMessage(proof.message, proof.signature).toLowerCase()
   if (proof.address && proof.address !== recoveredAddr) {
     return null
   } else {
