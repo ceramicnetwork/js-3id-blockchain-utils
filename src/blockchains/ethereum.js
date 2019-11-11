@@ -95,8 +95,8 @@ async function validateEoaLink (proof) {
 async function validateErc1271Link (proof) {
   const provider = getEthersProvider(proof.chainId)
   const contract = new Contract(proof.address, ERC1271_ABI, provider)
-  const message = '0x' + Buffer.from(linkObj.message, 'utf8').toString('hex')
-  const returnValue = await contract.isValidSignature(message, linkObj.signature)
+  const message = '0x' + Buffer.from(proof.message, 'utf8').toString('hex')
+  const returnValue = await contract.isValidSignature(message, proof.signature)
 
   return returnValue === MAGIC_ERC1271_VALUE ? proof : null
 }
@@ -104,7 +104,7 @@ async function validateErc1271Link (proof) {
 async function validateLink (proof) {
   if (proof.type === ADDRESS_TYPES.ethereumEOA) {
     return validateEoaLink(proof)
-  } else if (proof.type === ADDRESS_TYPES.ethereumEOA) {
+  } else if (proof.type === ADDRESS_TYPES.erc1271) {
     return validateErc1271Link(proof)
   }
 }
