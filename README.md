@@ -1,5 +1,10 @@
 # 3id-blockchain-utils
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![CircleCI](https://img.shields.io/circleci/project/github/3box/js-3id-blockchain-utils.svg?style=for-the-badge)](https://circleci.com/gh/3box/js-3id-blockchain-utils)
+[![npm](https://img.shields.io/npm/dt/3id-blockchain-utils.svg?style=for-the-badge)](https://www.npmjs.com/package/3id-blockchain-utils)
+[![npm](https://img.shields.io/npm/v/3id-blockchain-utils.svg?style=for-the-badge)](https://www.npmjs.com/package/3id-blockchain-utils)
+[![Codecov](https://img.shields.io/codecov/c/github/3box/js-3id-blockchain-utils.svg?style=for-the-badge)](https://codecov.io/gh/3box/js-3id-blockchain-utils)
+[![Greenkeeper badge](https://badges.greenkeeper.io/3box/js-3id-blockchain-utils.svg)](https://greenkeeper.io/)
 
 This package contains a bunch of utilities that is used by 3ID and 3Box in order to create and verify links from blockchain addresses.
 
