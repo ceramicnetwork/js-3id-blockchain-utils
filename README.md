@@ -28,10 +28,11 @@ import { createLink, validateLink } from '3id-blockchain-utils'
 
 Use the library to create and verify links:
 ```js
-const proof = createLink('0x123abc...', ethereumProvider)
+const did = 'did:3:bafypwg9834gf...'
+const proof = await createLink(did, '0x123abc...', ethereumProvider)
 console.log(proof)
 
-const verified = validateLink(proof)
+const verified = await validateLink(proof)
 if (verified) {
   console.log('Proof is valid', proof)
 } else {
