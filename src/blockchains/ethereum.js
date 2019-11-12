@@ -2,7 +2,7 @@ import { ADDRESS_TYPES } from '../constants'
 import { getConsentMessage, encodeRpcCall } from '../utils'
 import { verifyMessage } from '@ethersproject/wallet'
 import { Contract } from '@ethersproject/contracts'
-import * as providers from "@ethersproject/providers";
+import * as providers from "@ethersproject/providers"
 
 const ERC1271_ABI = [ 'function isValidSignature(bytes _messageHash, bytes _signature) public view returns (bytes4 magicValue)' ]
 const MAGIC_ERC1271_VALUE = '0x20c13b0b'
@@ -109,7 +109,7 @@ async function validateLink (proof) {
   }
 }
 
-export {
+export default {
   validateLink,
   createLink,
   typeDetector
