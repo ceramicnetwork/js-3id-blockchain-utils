@@ -1,6 +1,6 @@
 import { ADDRESS_TYPES } from '../../constants'
 import { encodeRpcCall } from '../../utils'
-import { createLink, validateLink, typeDetector } from '../ethereum'
+import ethereum from '../ethereum'
 import ganache from 'ganache-core'
 import sigUtils from 'eth-sig-util'
 import { ContractFactory, Contract } from "@ethersproject/contracts"
@@ -48,19 +48,19 @@ describe('Blockchain: Ethereum', () => {
 
   it('typeDetector: should return if not ethereum address', async () => {
     const notEthAddr = '0xabc123'
-    expect(await typeDetector(notEthAddr, provider)).toBeFalsy()
+    expect(await ethereum.typeDetector(notEthAddr, provider)).toBeFalsy()
   })
 
   it('typeDetector: should detect ethereumEOA address', async () => {
-    expect(await typeDetector(addresses[0], provider)).toEqual(ADDRESS_TYPES.ethereumEOA)
+    expect(await ethereum.typeDetector(addresses[0], provider)).toEqual(ADDRESS_TYPES.ethereumEOA)
   })
 
   it('typeDetector: should detect erc1271 address', async () => {
-    expect(await typeDetector(contractAddress, provider)).toEqual(ADDRESS_TYPES.erc1271)
+    expect(await ethereum.typeDetector(contractAddress, provider)).toEqual(ADDRESS_TYPES.erc1271)
   })
 
   it('createLink: should create ethereumEOA proof correctly', async () => {
-    eoaProof = await createLink(testDid, addresses[0], ADDRESS_TYPES.ethereumEOA, provider, { skipTimestamp: true })
+    eoaProof = await ethereum.createLink(testDid, addresses[0], ADDRESS_TYPES.ethereumEOA, provider, { skipTimestamp: true })
     expect(eoaProof).toMatchSnapshot()
   })
 
@@ -68,33 +68,33 @@ describe('Blockchain: Ethereum', () => {
     // In reality personal_sign is implemented differently by each contract wallet.
     // However the correct signature should still be returned. Here we simply test
     // that the proof is constructed correctly.
-    expect(await createLink(testDid, addresses[0], ADDRESS_TYPES.erc1271, provider, { skipTimestamp: true })).toMatchSnapshot()
+    expect(await ethereum.createLink(testDid, addresses[0], ADDRESS_TYPES.erc1271, provider, { skipTimestamp: true })).toMatchSnapshot()
   })
 
   it('validateLink: invalid ethereumEOA proof should return null', async () => {
     // wrong address
     let invalidProof = Object.assign({}, eoaProof, { address: addresses[1] })
-    expect(await validateLink(invalidProof)).toBeFalsy()
+    expect(await ethereum.validateLink(invalidProof)).toBeFalsy()
     // invalid signature
     invalidProof = Object.assign({}, eoaProof, { signature: '0xfa69ccf4a94db6132542abcabcabcab234b73f439700fbb748209890a5780f3365a5335f82d424d7f9a63ee41b637c116e64ef2f32c761bb065e4409f978c4babc' })
-    expect(await validateLink(invalidProof)).toBeFalsy()
+    expect(await ethereum.validateLink(invalidProof)).toBeFalsy()
   })
 
   it('validateLink: valid ethereumEOA proof should return proof', async () => {
-    expect(await validateLink(eoaProof)).toEqual(eoaProof)
+    expect(await ethereum.validateLink(eoaProof)).toEqual(eoaProof)
   })
 
   it('validateLink: valid ethereumEOA proof (missing address) should return proof with address', async () => {
     let missingAddrProof = Object.assign({}, eoaProof)
     delete missingAddrProof.address
-    expect(await validateLink(missingAddrProof)).toEqual(eoaProof)
+    expect(await ethereum.validateLink(missingAddrProof)).toEqual(eoaProof)
   })
 
   it('validateLink: invalid erc1271 proof should return null', async () => {
     // the contract wallet we deployed should just return false by default
     // when trying to validate signature
     erc1271Proof = Object.assign(eoaProof, { address: contractAddress, type: ADDRESS_TYPES.erc1271 })
-    expect(await validateLink(erc1271Proof)).toBeFalsy()
+    expect(await ethereum.validateLink(erc1271Proof)).toBeFalsy()
   })
 
   it('validateLink: valid erc1271 proof should return proof', async () => {
@@ -103,6 +103,6 @@ describe('Blockchain: Ethereum', () => {
     let tx = await contract.populateTransaction.setIsValid(true)
     tx = Object.assign(tx, { from: addresses[0], gas: 4712388, gasPrice: 100000000000 })
     await send(provider, encodeRpcCall('eth_sendTransaction', [tx]))
-    expect(await validateLink(erc1271Proof)).toEqual(erc1271Proof)
+    expect(await ethereum.validateLink(erc1271Proof)).toEqual(erc1271Proof)
   })
 })

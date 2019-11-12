@@ -1,13 +1,13 @@
 {
   "name": "3id-blockchain-utils",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Blockchain utils for 3ID",
   "main": "lib/index.js",
   "scripts": {
     "lint": "./node_modules/.bin/standard --verbose src/**",
     "build": "rm -rf ./lib; ./node_modules/.bin/babel src --out-dir lib --ignore=src/__tests__/,src/__mocks__/",
     "prepublishOnly": "npm run build",
-    "test": "jest --coverage"
+    "test": "jest --coverage src/**"
   },
   "author": "oed",
   "license": "MIT",
