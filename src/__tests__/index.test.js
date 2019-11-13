@@ -24,13 +24,15 @@ describe('3ID Blockchain Utils', () => {
 
   it('validateLink: ethereum types', async () => {
     const proof = {
-      type: ADDRESS_TYPES.ethereumEOA
+      type: ADDRESS_TYPES.ethereumEOA,
+      message: 'verifying did: ' + testDid
     }
-    expect(await validateLink(proof)).toEqual(proof)
+    const proofWithDid = Object.assign(proof, { did: testDid })
+    expect(await validateLink(proof)).toEqual(proofWithDid)
     expect(ethereum.validateLink).toHaveBeenCalledWith(proof)
     ethereum.validateLink.mockClear()
     proof.type = ADDRESS_TYPES.erc1271
-    expect(await validateLink(proof)).toEqual(proof)
+    expect(await validateLink(proof)).toEqual(proofWithDid)
     expect(ethereum.validateLink).toHaveBeenCalledWith(proof)
   })
 

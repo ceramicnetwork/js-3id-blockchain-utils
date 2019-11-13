@@ -1,6 +1,8 @@
 import { ADDRESS_TYPES } from './constants'
 import ethereum from './blockchains/ethereum'
 
+const findDID = did => did.match(/(did:(3|muport):[a-zA-Z0-9])\w+/)[0]
+
 const handlers = {
   [ADDRESS_TYPES.ethereumEOA]: ethereum,
   [ADDRESS_TYPES.erc1271]: ethereum
@@ -29,10 +31,16 @@ async function createLink (did, address, provider, opts = {}) {
   }
 }
 
-async function validateLink (proof) {
+async function validateLink (proof, did) {
   const validate = handlers[proof.type].validateLink
   if (typeof validate !== 'function') throw new Error(`proof with type ${proof.type} not supported`)
-  return validate(proof)
+  const validProof = validate(proof)
+  if (validProof) {
+    validProof.did = findDID(validProof.message)
+    return validProof
+  } else {
+    return null
+  }
 }
 
 export {
