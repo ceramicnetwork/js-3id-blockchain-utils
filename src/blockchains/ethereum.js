@@ -22,7 +22,7 @@ async function getChainId (provider) {
 }
 
 async function getCode (address, provider) {
-  const payload = encodeRpcCall('eth_getCode', [address])
+  const payload = encodeRpcCall('eth_getCode', [address, 'latest'])
   const code = await safeSend(payload, provider)
   return code
 }
