@@ -34,7 +34,7 @@ async function createLink (did, address, provider, opts = {}) {
 async function validateLink (proof, did) {
   const validate = handlers[proof.type].validateLink
   if (typeof validate !== 'function') throw new Error(`proof with type ${proof.type} not supported`)
-  const validProof = validate(proof)
+  const validProof = await validate(proof)
   if (validProof) {
     validProof.did = findDID(validProof.message)
     return validProof
