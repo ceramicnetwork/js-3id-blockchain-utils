@@ -40,7 +40,8 @@ async function safeSend (data, provider) {
 
 async function createEthLink (did, address, provider, opts = {}) {
   const { message, timestamp } = getConsentMessage(did, !opts.skipTimestamp)
-  const payload = encodeRpcCall('personal_sign', [message, address])
+  const hexMessage = '0x' + Buffer.from(message, 'utf8').toString('hex')
+  const payload = encodeRpcCall('personal_sign', [hexMessage, address])
   const signature = await safeSend(payload, provider)
   const proof = {
     version: 1,
@@ -114,4 +115,3 @@ export default {
   createLink,
   typeDetector
 }
-
