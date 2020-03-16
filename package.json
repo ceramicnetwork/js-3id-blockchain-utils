@@ -22,7 +22,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.7.0",
     "@babel/preset-env": "^7.7.1",
     "babel-jest": "^24.9.0",
-    "eth-sig-util": "^2.5.0",
+    "eth-sig-util": "^2.5.3",
     "ganache-core": "^2.10.1",
     "jest": "^24.9.0",
     "standard": "^14.3.1"
