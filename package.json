@@ -1,6 +1,6 @@
 {
   "name": "3id-blockchain-utils",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Blockchain utils for 3ID",
   "main": "lib/index.js",
   "scripts": {
