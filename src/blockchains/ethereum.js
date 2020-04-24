@@ -3,6 +3,7 @@ import { getConsentMessage, encodeRpcCall } from '../utils'
 import { verifyMessage } from '@ethersproject/wallet'
 import { Contract } from '@ethersproject/contracts'
 import * as providers from "@ethersproject/providers"
+import { sha256  } from 'js-sha256'
 
 const ERC1271_ABI = [ 'function isValidSignature(bytes _messageHash, bytes _signature) public view returns (bytes4 magicValue)' ]
 const MAGIC_ERC1271_VALUE = '0x20c13b0b'
@@ -110,7 +111,22 @@ async function validateLink (proof) {
   }
 }
 
+async function authenticate(message, address, provider) {
+  if (address) address = address.toLowerCase()
+  // TODO would maybe have that provider just implement their own function? if anything is provider specific, this should be general
+  if (provider.isAuthereum) return provider.signMessageWithSigningKey(text)
+  const hexMessage  = '0x' + Buffer.from(message, 'utf8').toString('hex')
+  const payload = encodeRpcCall('personal_sign', [hexMessage, address])
+  const signature = await safeSend(payload, provider)
+  if (address) {
+    const recoveredAddr = verifyMessage(message, signature).toLowerCase()
+    if (address !== recoveredAddr) throw new Error('Provider returned signature from different account than requested')
+  }
+  return `0x${sha256(signature.slice(2))}`
+}
+
 export default {
+  authenticate,
   validateLink,
   createLink,
   typeDetector
