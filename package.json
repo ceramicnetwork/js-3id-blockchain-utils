@@ -1,6 +1,6 @@
 {
   "name": "3id-blockchain-utils",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Blockchain utils for 3ID",
   "main": "lib/index.js",
   "scripts": {
@@ -12,9 +12,9 @@
   "author": "oed",
   "license": "MIT",
   "dependencies": {
-    "@ethersproject/contracts": "^5.0.0-beta.140",
-    "@ethersproject/providers": "^5.0.0-beta.144",
-    "@ethersproject/wallet": "^5.0.0-beta.133"
+    "@ethersproject/contracts": "5.0.0-beta.152",
+    "@ethersproject/providers": "5.0.0-beta.144",
+    "@ethersproject/wallet": "5.0.0-beta.136"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
