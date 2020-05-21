@@ -43,7 +43,12 @@ async function validateLink (proof, did) {
   }
 }
 
+const authenticate = {
+  ethereum: ethereum.authenticate
+}
+
 export {
   createLink,
-  validateLink
+  validateLink,
+  authenticate
 }

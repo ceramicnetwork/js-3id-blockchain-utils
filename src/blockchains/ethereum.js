@@ -113,7 +113,6 @@ async function validateLink (proof) {
 
 async function authenticate(message, address, provider) {
   if (address) address = address.toLowerCase()
-  // TODO would maybe have that provider just implement their own function? if anything is provider specific, this should be general
   if (provider.isAuthereum) return provider.signMessageWithSigningKey(text)
   const hexMessage  = '0x' + Buffer.from(message, 'utf8').toString('hex')
   const payload = encodeRpcCall('personal_sign', [hexMessage, address])

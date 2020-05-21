@@ -7,6 +7,7 @@
     "lint": "./node_modules/.bin/standard --verbose src/**",
     "build": "rm -rf ./lib; ./node_modules/.bin/babel src --out-dir lib --ignore=src/__tests__/,src/__mocks__/",
     "prepublishOnly": "npm run build",
+    "prepare": "npm run build",
     "test": "jest --coverage src/**"
   },
   "author": "oed",
@@ -15,7 +16,7 @@
     "@babel/runtime": "^7.9.2",
     "@ethersproject/contracts": "5.0.0-beta.152",
     "@ethersproject/providers": "5.0.0-beta.144",
-    "@ethersproject/wallet": "5.0.0-beta.136"
+    "@ethersproject/wallet": "5.0.0-beta.136",
     "js-sha256": "^0.9.0"
   },
   "devDependencies": {
