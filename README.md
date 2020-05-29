@@ -43,7 +43,7 @@ if (verified) {
 Use the library for 3ID authenticate:
 
 ```js
-await authenticate.ethereum(message, '0x123abc...', ethereumProvider)
+await authenticate(message, '0x123abc...', ethereumProvider)
 ```
 
 ## Maintainers

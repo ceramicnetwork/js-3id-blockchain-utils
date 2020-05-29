@@ -27,6 +27,8 @@ describe('Blockchain: Ethereum', () => {
     addresses = await send(provider, encodeRpcCall('eth_accounts'))
     // ganache-core doesn't support personal_sign -.-
     provider.manager.personal_sign = (data, address, callback) => {
+      // next line is hack to make contract address to personal sign
+      if (address === contractAddress.toLowerCase()) address = addresses[0]
       const account = provider.manager.state.accounts[address.toLowerCase()]
       const result = sigUtils.personalSign(account.secretKey, { data })
       callback(null, result)
@@ -46,17 +48,15 @@ describe('Blockchain: Ethereum', () => {
     }
   })
 
-  it('typeDetector: should return if not ethereum address', async () => {
+  it('typeDetector: should detect eth address correctly', async () => {
     const notEthAddr = '0xabc123'
     expect(await ethereum.typeDetector(notEthAddr, provider)).toBeFalsy()
+    expect(await ethereum.typeDetector(addresses[0], provider)).toEqual(ADDRESS_TYPES.ethereum)
   })
 
-  it('typeDetector: should detect ethereumEOA address', async () => {
-    expect(await ethereum.typeDetector(addresses[0], provider)).toEqual(ADDRESS_TYPES.ethereumEOA)
-  })
-
-  it('typeDetector: should detect erc1271 address', async () => {
-    expect(await ethereum.typeDetector(contractAddress, provider)).toEqual(ADDRESS_TYPES.erc1271)
+  it('isERC1271: should detect erc1271 address', async () => {
+    expect(await ethereum.isERC1271(addresses[0], provider)).toEqual(false)
+    expect(await ethereum.isERC1271(contractAddress, provider)).toEqual(true)
   })
 
   it('createLink: should create ethereumEOA proof correctly', async () => {
@@ -68,7 +68,7 @@ describe('Blockchain: Ethereum', () => {
     // In reality personal_sign is implemented differently by each contract wallet.
     // However the correct signature should still be returned. Here we simply test
     // that the proof is constructed correctly.
-    expect(await ethereum.createLink(testDid, addresses[0], ADDRESS_TYPES.erc1271, provider, { skipTimestamp: true })).toMatchSnapshot()
+    expect(await ethereum.createLink(testDid, contractAddress, ADDRESS_TYPES.erc1271, provider, { skipTimestamp: true })).toMatchSnapshot()
   })
 
   it('validateLink: invalid ethereumEOA proof should return null', async () => {

@@ -64,22 +64,20 @@ async function createErc1271Link (did, address, provider, opts) {
   })
 }
 
-async function typeDetector (address, provider) {
-  if (!isEthAddress(address)) {
-    return false
-  }
+async function typeDetector (address) {
+  return isEthAddress(address) ? ADDRESS_TYPES.ethereum : false
+}
+
+async function isERC1271 (address, provider) {
   const bytecode = await getCode(address, provider).catch(() => null)
-  if (!bytecode || bytecode === '0x' || bytecode === '0x0' || bytecode === '0x00') {
-    return ADDRESS_TYPES.ethereumEOA
-  }
-  return ADDRESS_TYPES.erc1271
+  return bytecode && bytecode !== '0x' && bytecode !== '0x0' && bytecode !== '0x00'
 }
 
 async function createLink (did, address, type, provider, opts) {
   address = address.toLowerCase()
-  if (type === ADDRESS_TYPES.ethereumEOA) {
+  if (!(await isERC1271(address, provider))) {
     return createEthLink(did, address, provider, opts)
-  } else if (type === ADDRESS_TYPES.erc1271) {
+  } else {
     return createErc1271Link(did, address, provider, opts)
   }
 }
@@ -128,5 +126,6 @@ export default {
   authenticate,
   validateLink,
   createLink,
-  typeDetector
+  typeDetector,
+  isERC1271
 }
