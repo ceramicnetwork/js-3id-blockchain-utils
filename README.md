@@ -23,7 +23,7 @@ $ npm install --save 3id-blockchain-utils
 ## Usage
 Import the package into your project
 ```js
-import { createLink, validateLink } from '3id-blockchain-utils'
+import { createLink, validateLink, authenticate } from '3id-blockchain-utils'
 ```
 
 Use the library to create and verify links:
@@ -38,6 +38,12 @@ if (verified) {
 } else {
   console.log('Proof is invalid')
 }
+```
+
+Use the library for 3ID authenticate:
+
+```js
+await authenticate(message, '0x123abc...', ethereumProvider)
 ```
 
 ## Maintainers

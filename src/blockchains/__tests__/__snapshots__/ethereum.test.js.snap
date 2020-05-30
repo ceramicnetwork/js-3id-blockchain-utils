@@ -2,7 +2,7 @@
 
 exports[`Blockchain: Ethereum createLink: should create erc1271 proof correctly 1`] = `
 Object {
-  "address": "0x8fe2c4516e920425e177658aaac451ca0463ed69",
+  "address": "0xbe6c27620b271dd76f1787cdef1f4375cff3fa1f",
   "chainId": 1337,
   "message": "Create a new 3Box profile
 
