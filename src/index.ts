@@ -49,7 +49,7 @@ async function authenticate (
 ): Promise<string> {
   if (typeof account === 'string') account = new AccountID(account)
   const handler = handlers[account.chainId.namespace]
-  if (!handler) throw new Error(`authenticate with namespace '${namespace}' not supported`)
+  if (!handler) throw new Error(`authenticate with namespace '${account.chainId.namespace}' not supported`)
   return handler.authenticate(message, account, provider)
 }
 

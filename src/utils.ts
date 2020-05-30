@@ -4,6 +4,7 @@ interface LinkProof {
   signature: string;
   account: string;
   did?: string;
+  timestamp?: number;
   address?: string;
   type?: string;
   chainId?: number;
@@ -17,7 +18,7 @@ interface RpcMessage {
 }
 
 function getConsentMessage (did: string, addTimestamp: boolean): any {
-  const res = {
+  const res: any = {
     message: 'Create a new 3Box profile' + '\n\n' + '- \n' + 'Your unique profile ID is ' + did
   }
   if (addTimestamp) {

@@ -14,6 +14,7 @@
   },
   "exclude": [
     "node_modules",
+    "**/fixtures.ts",
     "**/*.spec.ts",
     "**/*.test.ts"
   ],

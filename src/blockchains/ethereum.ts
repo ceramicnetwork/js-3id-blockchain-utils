@@ -23,7 +23,7 @@ function normalizeAccountId (account: AccountID): AccountID {
 async function safeSend (data: RpcMessage, provider: any): Promise<any> {
   const send = (provider.sendAsync ? provider.sendAsync : provider.send).bind(provider)
   return new Promise((resolve, reject) => {
-    send(data, function(err, result) {
+    send(data, function(err: any, result: any) {
       if (err) reject(err)
       else if (result.error) reject(result.error)
       else resolve(result.result)
@@ -37,7 +37,7 @@ function getEthersProvider (chainId: string): any {
   return network._defaultProvider(providers)
 }
 
-async function getCode (address: string, provider: any): string {
+async function getCode (address: string, provider: any): Promise<string> {
   const payload = encodeRpcMessage('eth_getCode', [address, 'latest'])
   const code = await safeSend(payload, provider)
   return code
@@ -108,7 +108,7 @@ async function createLink (
 function toV2Proof (proof: LinkProof, address?: string): LinkProof {
   proof.account = new AccountID({
     address: (proof.version === 1) ? proof.address : address,
-    chainId: { namespace, reference: proof.chainId || '1' }
+    chainId: { namespace, reference: proof.chainId ? proof.chainId.toString() : '1' }
   }).toString()
   delete proof.address
   delete proof.chainId
@@ -151,7 +151,7 @@ async function authenticate(
   provider: any
 ): Promise<string> {
   if (account) account = normalizeAccountId(account)
-  if (provider.isAuthereum) return provider.signMessageWithSigningKey(text)
+  if (provider.isAuthereum) return provider.signMessageWithSigningKey(message)
   const hexMessage  = '0x' + Buffer.from(message, 'utf8').toString('hex')
   const payload = encodeRpcMessage('personal_sign', [hexMessage, account.address])
   const signature = await safeSend(payload, provider)
