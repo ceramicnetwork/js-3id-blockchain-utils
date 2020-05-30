@@ -2,6 +2,8 @@ interface LinkProof {
   version: number;
   message: string;
   signature: string;
+  account: string;
+  did?: string;
   address?: string;
   type?: string;
   chainId?: number;

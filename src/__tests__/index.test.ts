@@ -1,10 +1,11 @@
-import { ADDRESS_TYPES } from '../constants'
-import { createLink, validateLink } from '../index'
+import { AccountID } from 'caip'
+import { createLink, validateLink, authenticate } from '../index'
 
 jest.mock('../blockchains/ethereum', () => ({
-  typeDetector: jest.fn(),
   createLink: jest.fn(),
   validateLink: jest.fn(proof => proof),
+  authenticate: jest.fn(),
+  namespace: 'eip155'
 }))
 import ethereum from '../blockchains/ethereum'
 
@@ -12,46 +13,56 @@ import ethereum from '../blockchains/ethereum'
 describe('3ID Blockchain Utils', () => {
 
   const testDid = 'did:3:bafysdfwefwe'
-  const testAddr = '0x12345abcde'
+  const testAccount = new AccountID('0x12345abcde@eip155:1337')
+  const notSupportedAccount = new AccountID('0x12345abcde@not-supported:1337')
   const mockProvider = 'fake provider'
 
-  it('validateLink: should throw if type not supported', async () => {
+  it('validateLink: should throw if namespace not supported', async () => {
     const proof = {
-      type: 'not supported'
+      version: 2,
+      account: notSupportedAccount
     }
     await expect(validateLink(proof)).rejects.toMatchSnapshot()
   })
 
-  it('validateLink: ethereum types', async () => {
+  it('validateLink: ethereum namespace', async () => {
     const proof = {
-      type: ADDRESS_TYPES.ethereumEOA,
-      message: 'verifying did: ' + testDid
+      version: 2,
+      message: 'verifying did: ' + testDid,
+      account: testAccount
     }
     const proofWithDid = Object.assign(proof, { did: testDid })
     expect(await validateLink(proof)).toEqual(proofWithDid)
     expect(ethereum.validateLink).toHaveBeenCalledWith(proof)
     ethereum.validateLink.mockClear()
-    proof.type = ADDRESS_TYPES.erc1271
+    // version < 2 should be interpreted as ethereum
+    delete proof.version
     expect(await validateLink(proof)).toEqual(proofWithDid)
     expect(ethereum.validateLink).toHaveBeenCalledWith(proof)
   })
 
-
-  it('createLink: should trow if type not supported', async () => {
-    const type = 'typeABC'
-    await expect(createLink(testDid, testAddr, mockProvider, { type })).rejects.toMatchSnapshot()
-    await expect(createLink(testDid, testAddr, mockProvider)).rejects.toMatchSnapshot()
+  it('createLink: should throw if namespace not supported', async () => {
+    await expect(createLink(testDid, notSupportedAccount, mockProvider)).rejects.toMatchSnapshot()
   })
 
-  it('createLink: should create link with ethereum types correctly', async () => {
-    const proof = { such: 'proof' }
+  it('createLink: should create link with ethereum namespace correctly', async () => {
+    const proof = {
+      version: 2,
+      message: 'verifying did: ' + testDid,
+      account: testAccount
+    }
     ethereum.createLink.mockImplementation(() => proof)
-    ethereum.typeDetector.mockImplementationOnce(() => ADDRESS_TYPES.ethereumEOA)
-    expect(await createLink(testDid, testAddr, mockProvider)).toEqual(proof)
-    expect(ethereum.createLink).toHaveBeenCalledWith(testDid, testAddr, mockProvider, {})
-    ethereum.createLink.mockClear()
-    ethereum.typeDetector.mockImplementationOnce(() => ADDRESS_TYPES.erc1271)
-    expect(await createLink(testDid, testAddr, mockProvider)).toEqual(proof)
-    expect(ethereum.createLink).toHaveBeenCalledWith(testDid, testAddr, mockProvider, {})
+    expect(await createLink(testDid, testAccount, mockProvider)).toEqual(proof)
+    expect(ethereum.createLink).toHaveBeenCalledWith(testDid, testAccount, mockProvider, {})
+  })
+
+  it('authenticate: should throw if namespace not supported', async () => {
+    await expect(authenticate('msg', notSupportedAccount, mockProvider)).rejects.toMatchSnapshot()
+  })
+
+  it('authenticate: should create link with ethereum namespace correctly', async () => {
+    ethereum.authenticate.mockImplementation(() => 'entropy')
+    expect(await authenticate('msg', testAccount, mockProvider)).toEqual('entropy')
+    expect(ethereum.authenticate).toHaveBeenCalledWith('msg', testAccount, mockProvider)
   })
 })
