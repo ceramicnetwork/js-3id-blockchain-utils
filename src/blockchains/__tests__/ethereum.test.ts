@@ -1,5 +1,5 @@
 import { ADDRESS_TYPES } from '../../constants'
-import { encodeRpcCall } from '../../utils'
+import { encodeRpcMessage } from '../../utils'
 import ethereum from '../ethereum'
 import ganache from 'ganache-core'
 import * as sigUtils from 'eth-sig-util'
@@ -12,7 +12,7 @@ const CONTRACT_WALLET_BYTECODE = { "linkReferences": {}, "object": "608060405260
 const GANACHE_CONF = {
   seed: '0xd30553e27ba2954e3736dae1342f5495798d4f54012787172048582566938f6f',
 }
-const send = (provider, data) => new Promise((resolve, reject) => provider.send(data, (err, res) => {
+const send = (provider, data): Promise<any> => new Promise((resolve, reject) => provider.send(data, (err, res) => {
   if (err) reject(err)
   else resolve(res.result)
 }))
@@ -24,9 +24,9 @@ describe('Blockchain: Ethereum', () => {
 
   beforeAll(async () => {
     provider = ganache.provider(GANACHE_CONF)
-    addresses = await send(provider, encodeRpcCall('eth_accounts'))
+    addresses = await send(provider, encodeRpcMessage('eth_accounts'))
     // ganache-core doesn't support personal_sign -.-
-    provider.manager.personal_sign = (data, address, callback) => {
+    provider.manager.personal_sign = (data, address, callback): void => { // eslint-disable-line @typescript-eslint/camelcase
       // next line is hack to make contract address to personal sign
       if (address === contractAddress.toLowerCase()) address = addresses[0]
       const account = provider.manager.state.accounts[address.toLowerCase()]
@@ -36,12 +36,12 @@ describe('Blockchain: Ethereum', () => {
     // deploy contract wallet
     const factory = new ContractFactory(CONTRACT_WALLET_ABI, CONTRACT_WALLET_BYTECODE)
     const unsignedTx = Object.assign(factory.getDeployTransaction(), { from: addresses[0], gas: 4712388, gasPrice: 100000000000, nonce: 0 })
-    await send(provider, encodeRpcCall('eth_sendTransaction', [unsignedTx]))
+    await send(provider, encodeRpcMessage('eth_sendTransaction', [unsignedTx]))
     contractAddress = Contract.getContractAddress(unsignedTx)
     // mock ethers providers
-    providers.getNetwork = () => {
+    providers.getNetwork = (): any => {
       return {
-        _defaultProvider: () => {
+        _defaultProvider: (): any => {
           return new providers.Web3Provider(provider)
         }
       }
@@ -60,7 +60,7 @@ describe('Blockchain: Ethereum', () => {
   })
 
   it('createLink: should create ethereumEOA proof correctly', async () => {
-    eoaProof = await ethereum.createLink(testDid, addresses[0], ADDRESS_TYPES.ethereumEOA, provider, { skipTimestamp: true })
+    eoaProof = await ethereum.createLink(testDid, addresses[0], provider, { skipTimestamp: true })
     expect(eoaProof).toMatchSnapshot()
   })
 
@@ -68,7 +68,7 @@ describe('Blockchain: Ethereum', () => {
     // In reality personal_sign is implemented differently by each contract wallet.
     // However the correct signature should still be returned. Here we simply test
     // that the proof is constructed correctly.
-    expect(await ethereum.createLink(testDid, contractAddress, ADDRESS_TYPES.erc1271, provider, { skipTimestamp: true })).toMatchSnapshot()
+    expect(await ethereum.createLink(testDid, contractAddress, provider, { skipTimestamp: true })).toMatchSnapshot()
   })
 
   it('validateLink: invalid ethereumEOA proof should return null', async () => {
@@ -85,7 +85,7 @@ describe('Blockchain: Ethereum', () => {
   })
 
   it('validateLink: valid ethereumEOA proof (missing address) should return proof with address', async () => {
-    let missingAddrProof = Object.assign({}, eoaProof)
+    const missingAddrProof = Object.assign({}, eoaProof)
     delete missingAddrProof.address
     expect(await ethereum.validateLink(missingAddrProof)).toEqual(eoaProof)
   })
@@ -102,7 +102,7 @@ describe('Blockchain: Ethereum', () => {
     const contract = new Contract(contractAddress, CONTRACT_WALLET_ABI, new providers.Web3Provider(provider))
     let tx = await contract.populateTransaction.setIsValid(true)
     tx = Object.assign(tx, { from: addresses[0], gas: 4712388, gasPrice: 100000000000 })
-    await send(provider, encodeRpcCall('eth_sendTransaction', [tx]))
+    await send(provider, encodeRpcMessage('eth_sendTransaction', [tx]))
     expect(await ethereum.validateLink(erc1271Proof)).toEqual(erc1271Proof)
   })
 })

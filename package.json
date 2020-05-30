@@ -4,11 +4,12 @@
   "description": "Blockchain utils for 3ID",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/standard --verbose src/**",
-    "build": "rm -rf ./lib; ./node_modules/.bin/babel src --out-dir lib --ignore=src/__tests__/,src/__mocks__/",
+    "test": "./node_modules/.bin/jest --coverage",
+    "build": "../../node_modules/.bin/tsc -p tsconfig.json",
     "prepublishOnly": "npm run build",
-    "prepare": "npm run build",
-    "test": "jest --coverage"
+    "prebuild": "npm run clean",
+    "lint": "./node_modules/.bin/eslint ./src --ext .js,.jsx,.ts,.tsx",
+    "clean": "rm -rf ./lib"
   },
   "author": "oed",
   "license": "MIT",
@@ -20,18 +21,21 @@
     "js-sha256": "^0.9.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.2",
-    "@babel/plugin-transform-modules-commonjs": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
-    "babel-jest": "^24.9.0",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.9.0",
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/parser": "^2.19.0",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
     "eth-sig-util": "^2.5.3",
     "ganache-core": "^2.10.1",
-    "jest": "^24.9.0",
-    "standard": "^14.3.1"
+    "jest": "^25.1.0",
+    "js-sha256": "^0.9.0",
+    "typescript": "^3.9.3"
   },
   "jest": {
-    "testEnvironment": "node",
     "testPathIgnorePatterns": [
       "node_modules",
       "lib"

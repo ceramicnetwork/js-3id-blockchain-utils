@@ -1,5 +1,5 @@
 import { ADDRESS_TYPES } from '../constants'
-import { getConsentMessage, encodeRpcCall } from '../utils'
+import { getConsentMessage, encodeRpcMessage, RpcMessage, LinkProof } from '../utils'
 import { verifyMessage } from '@ethersproject/wallet'
 import { Contract } from '@ethersproject/contracts'
 import * as providers from "@ethersproject/providers"
@@ -7,29 +7,12 @@ import { sha256  } from 'js-sha256'
 
 const ERC1271_ABI = [ 'function isValidSignature(bytes _messageHash, bytes _signature) public view returns (bytes4 magicValue)' ]
 const MAGIC_ERC1271_VALUE = '0x20c13b0b'
-const isEthAddress = address => /^0x[a-fA-F0-9]{40}$/.test(address)
+const isEthAddress = (address: string): boolean => /^0x[a-fA-F0-9]{40}$/.test(address)
+//const namespace = 'eip155'
 
 
-function getEthersProvider (chainId) {
-  const network = providers.getNetwork(chainId)
-  if (!network._defaultProvider) throw new Error(`Network with chainId ${chainId} is not supported`)
-  return network._defaultProvider(providers)
-}
-
-async function getChainId (provider) {
-  const payload = encodeRpcCall('eth_chainId', [])
-  const chainIdHex = await safeSend(payload, provider)
-  return parseInt(chainIdHex, 16)
-}
-
-async function getCode (address, provider) {
-  const payload = encodeRpcCall('eth_getCode', [address, 'latest'])
-  const code = await safeSend(payload, provider)
-  return code
-}
-
-async function safeSend (data, provider) {
-  const send = (Boolean(provider.sendAsync) ? provider.sendAsync : provider.send).bind(provider)
+async function safeSend (data: RpcMessage, provider: any): Promise<any> {
+  const send = (provider.sendAsync ? provider.sendAsync : provider.send).bind(provider)
   return new Promise((resolve, reject) => {
     send(data, function(err, result) {
       if (err) reject(err)
@@ -39,12 +22,35 @@ async function safeSend (data, provider) {
   })
 }
 
-async function createEthLink (did, address, provider, opts = {}) {
+function getEthersProvider (chainId: number): any {
+  const network = providers.getNetwork(chainId)
+  if (!network._defaultProvider) throw new Error(`Network with chainId ${chainId} is not supported`)
+  return network._defaultProvider(providers)
+}
+
+async function getChainId (provider: any): number {
+  const payload = encodeRpcMessage('eth_chainId', [])
+  const chainIdHex = await safeSend(payload, provider)
+  return parseInt(chainIdHex, 16)
+}
+
+async function getCode (address: string, provider: any): string {
+  const payload = encodeRpcMessage('eth_getCode', [address, 'latest'])
+  const code = await safeSend(payload, provider)
+  return code
+}
+
+async function createEthLink (
+  did: string,
+  address: string,
+  provider: any,
+  opts: any = {}
+): Promise<LinkProof> {
   const { message, timestamp } = getConsentMessage(did, !opts.skipTimestamp)
   const hexMessage = '0x' + Buffer.from(message, 'utf8').toString('hex')
-  const payload = encodeRpcCall('personal_sign', [hexMessage, address])
+  const payload = encodeRpcMessage('personal_sign', [hexMessage, address])
   const signature = await safeSend(payload, provider)
-  const proof = {
+  const proof: LinkProof = {
     version: 1,
     type: ADDRESS_TYPES.ethereumEOA,
     message,
@@ -55,7 +61,12 @@ async function createEthLink (did, address, provider, opts = {}) {
   return proof
 }
 
-async function createErc1271Link (did, address, provider, opts) {
+async function createErc1271Link (
+  did: string,
+  address: string,
+  provider: any,
+  opts: any
+): Promise<LinkProof> {
   const res = await createEthLink(did, address, provider, opts)
   const chainId = await getChainId(provider)
   return Object.assign(res, {
@@ -64,16 +75,21 @@ async function createErc1271Link (did, address, provider, opts) {
   })
 }
 
-async function typeDetector (address) {
+async function typeDetector (address): Promise<any> {
   return isEthAddress(address) ? ADDRESS_TYPES.ethereum : false
 }
 
-async function isERC1271 (address, provider) {
+async function isERC1271 (address: string, provider: any): Promise<boolean> {
   const bytecode = await getCode(address, provider).catch(() => null)
   return bytecode && bytecode !== '0x' && bytecode !== '0x0' && bytecode !== '0x00'
 }
 
-async function createLink (did, address, type, provider, opts) {
+async function createLink (
+  did: string,
+  address: string,
+  provider: any,
+  opts: any
+): Promise<LinkProof> {
   address = address.toLowerCase()
   if (!(await isERC1271(address, provider))) {
     return createEthLink(did, address, provider, opts)
@@ -82,7 +98,7 @@ async function createLink (did, address, type, provider, opts) {
   }
 }
 
-async function validateEoaLink (proof) {
+async function validateEoaLink (proof: LinkProof): Promise<LinkProof> {
   const recoveredAddr = verifyMessage(proof.message, proof.signature).toLowerCase()
   if (proof.address && proof.address !== recoveredAddr) {
     return null
@@ -92,7 +108,7 @@ async function validateEoaLink (proof) {
   return proof
 }
 
-async function validateErc1271Link (proof) {
+async function validateErc1271Link (proof: LinkProof): Promise<LinkProof> {
   const provider = getEthersProvider(proof.chainId)
   const contract = new Contract(proof.address, ERC1271_ABI, provider)
   const message = '0x' + Buffer.from(proof.message, 'utf8').toString('hex')
@@ -101,7 +117,7 @@ async function validateErc1271Link (proof) {
   return returnValue === MAGIC_ERC1271_VALUE ? proof : null
 }
 
-async function validateLink (proof) {
+async function validateLink (proof: LinkProof): Promise<LinkProof> {
   if (proof.type === ADDRESS_TYPES.ethereumEOA) {
     return validateEoaLink(proof)
   } else if (proof.type === ADDRESS_TYPES.erc1271) {
@@ -109,11 +125,15 @@ async function validateLink (proof) {
   }
 }
 
-async function authenticate(message, address, provider) {
+async function authenticate(
+  message: string,
+  address: string,
+  provider: any
+): Promise<string> {
   if (address) address = address.toLowerCase()
   if (provider.isAuthereum) return provider.signMessageWithSigningKey(text)
   const hexMessage  = '0x' + Buffer.from(message, 'utf8').toString('hex')
-  const payload = encodeRpcCall('personal_sign', [hexMessage, address])
+  const payload = encodeRpcMessage('personal_sign', [hexMessage, address])
   const signature = await safeSend(payload, provider)
   if (address) {
     const recoveredAddr = verifyMessage(message, signature).toLowerCase()
@@ -127,5 +147,6 @@ export default {
   validateLink,
   createLink,
   typeDetector,
-  isERC1271
+  isERC1271,
+  isEthAddress
 }
