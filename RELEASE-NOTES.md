@@ -1,5 +1,8 @@
 # Release Notes
 
+## v0.4.0 - 2020-05-30
+feat: auth function, reconciled type detection
+
 ## v0.3.4 - 2020-05-18
 fix: strict ethersjs package versions
 
