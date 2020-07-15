@@ -14,9 +14,9 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.9.2",
-    "@ethersproject/contracts": "5.0.0-beta.152",
-    "@ethersproject/providers": "5.0.0-beta.144",
-    "@ethersproject/wallet": "5.0.0-beta.136",
+    "@ethersproject/contracts": "^5.0.1",
+    "@ethersproject/providers": "^5.0.4",
+    "@ethersproject/wallet": "^5.0.1",
     "js-sha256": "^0.9.0"
   },
   "devDependencies": {
@@ -26,7 +26,7 @@
     "@babel/preset-env": "^7.7.1",
     "babel-jest": "^24.9.0",
     "eth-sig-util": "^2.5.3",
-    "ganache-core": "^2.10.1",
+    "ganache-core": "^2.10.2",
     "jest": "^24.9.0",
     "standard": "^14.3.1"
   },
