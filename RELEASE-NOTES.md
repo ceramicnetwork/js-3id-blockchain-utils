@@ -1,5 +1,8 @@
 # Release Notes
 
+## v0.4.1 - 2020-08-06
+chore: up ether
+
 ## v0.4.0 - 2020-05-30
 feat: auth function, reconciled type detection
 
