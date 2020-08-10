@@ -88,7 +88,7 @@ async function createErc1271Link (
 
 async function isERC1271 (account: AccountID, provider: any): Promise<boolean> {
   const bytecode = await getCode(account.address, provider).catch(() => null)
-  return bytecode && bytecode !== '0x' && bytecode !== '0x0' && bytecode !== '0x00'
+  return Boolean(bytecode && bytecode !== '0x' && bytecode !== '0x0' && bytecode !== '0x00')
 }
 
 async function createLink (
@@ -107,7 +107,7 @@ async function createLink (
 
 function toV2Proof (proof: LinkProof, address?: string): LinkProof {
   proof.account = new AccountID({
-    address: (proof.version === 1) ? proof.address : address,
+    address: ((proof.version === 1) ? proof.address : address) || '',
     chainId: { namespace, reference: proof.chainId ? proof.chainId.toString() : '1' }
   }).toString()
   delete proof.address
@@ -116,7 +116,7 @@ function toV2Proof (proof: LinkProof, address?: string): LinkProof {
   return proof
 }
 
-async function validateEoaLink (proof: LinkProof): Promise<LinkProof> {
+async function validateEoaLink (proof: LinkProof): Promise<LinkProof | null> {
   const recoveredAddr = verifyMessage(proof.message, proof.signature).toLowerCase()
   if (proof.version !== 2) proof = toV2Proof(proof, recoveredAddr)
   const account = new AccountID(proof.account)
@@ -126,7 +126,7 @@ async function validateEoaLink (proof: LinkProof): Promise<LinkProof> {
   return proof
 }
 
-async function validateErc1271Link (proof: LinkProof): Promise<LinkProof> {
+async function validateErc1271Link (proof: LinkProof): Promise<LinkProof | null> {
   if (proof.version === 1) proof = toV2Proof(proof)
   const account = new AccountID(proof.account)
   const provider = getEthersProvider(account.chainId.reference)
@@ -137,12 +137,11 @@ async function validateErc1271Link (proof: LinkProof): Promise<LinkProof> {
   return returnValue === MAGIC_ERC1271_VALUE ? proof : null
 }
 
-async function validateLink (proof: LinkProof): Promise<LinkProof> {
-  if (proof.type === ADDRESS_TYPES.ethereumEOA) {
-    return validateEoaLink(proof)
-  } else if (proof.type === ADDRESS_TYPES.erc1271) {
+async function validateLink (proof: LinkProof): Promise<LinkProof | null> {
+  if (proof.type === ADDRESS_TYPES.erc1271) {
     return validateErc1271Link(proof)
   }
+  return validateEoaLink(proof)
 }
 
 async function authenticate(

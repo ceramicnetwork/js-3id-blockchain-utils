@@ -2,7 +2,7 @@ import { AccountID } from 'caip'
 import { LinkProof } from './utils'
 import ethereum from './blockchains/ethereum'
 
-const findDID = (did: string): string => did.match(/(did:(3|muport):[a-zA-Z0-9])\w+/)[0]
+const findDID = (did: string): string | undefined => did.match(/(did:(3|muport):[a-zA-Z0-9])\w+/)?.[0]
 
 const handlers = {
   [ethereum.namespace]: ethereum
@@ -25,7 +25,7 @@ async function createLink (
   }
 }
 
-async function validateLink (proof: LinkProof): Promise<LinkProof> {
+async function validateLink (proof: LinkProof): Promise<LinkProof | null> {
   // version < 2 are always eip155 namespace
   let namespace = ethereum.namespace
   if (proof.version >= 2) {
