@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`3ID Blockchain Utils authenticate: should throw if namespace not supported 1`] = `[Error: authenticate with namespace 'not-supported' not supported]`;
+
+exports[`3ID Blockchain Utils createLink: should throw if namespace not supported 1`] = `[Error: creating link with namespace 'not-supported' is not supported]`;
+
+exports[`3ID Blockchain Utils validateLink: should throw if namespace not supported 1`] = `[Error: proof with namespace 'not-supported' not supported]`;

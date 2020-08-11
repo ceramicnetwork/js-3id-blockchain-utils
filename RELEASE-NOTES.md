@@ -1,5 +1,9 @@
 # Release Notes
 
+## v1.0.0 - 2020-08-10
+ref: use typescript
+ref: use caip10 accountIds
+
 ## v0.4.1 - 2020-08-06
 chore: up ether
 

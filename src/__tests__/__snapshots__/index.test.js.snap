@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`3ID Blockchain Utils createLink: should trow if type not supported 1`] = `[Error: creating link with type typeABC, not supported]`;
-
-exports[`3ID Blockchain Utils createLink: should trow if type not supported 2`] = `[Error: creating link with type undefined, not supported]`;
-
-exports[`3ID Blockchain Utils validateLink: should throw if type not supported 1`] = `[TypeError: Cannot read property 'validateLink' of undefined]`;
