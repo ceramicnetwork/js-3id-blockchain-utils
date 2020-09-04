@@ -80,4 +80,4 @@ $ npm test
 ```
 
 ## Licence
-MIT © Joel Thorstensson
+Apache-2.0 OR MIT
