@@ -12,7 +12,7 @@
     "clean": "rm -rf ./lib"
   },
   "author": "oed",
-  "license": "MIT",
+  "license": "(Apache-2.0 OR MIT)",
   "dependencies": {
     "@babel/runtime": "^7.9.2",
     "@ethersproject/contracts": "^5.0.1",
