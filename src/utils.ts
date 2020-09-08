@@ -17,7 +17,12 @@ interface RpcMessage {
   params: any;
 }
 
-function getConsentMessage (did: string, addTimestamp: boolean): any {
+export interface ConsentMessage {
+  message: string;
+  timestamp?: number;
+}
+
+function getConsentMessage (did: string, addTimestamp: boolean): ConsentMessage {
   const res: any = {
     message: 'Create a new 3Box profile' + '\n\n' + '- \n' + 'Your unique profile ID is ' + did
   }

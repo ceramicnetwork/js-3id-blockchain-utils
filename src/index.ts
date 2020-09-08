@@ -1,16 +1,18 @@
 import { AccountID } from 'caip'
 import { LinkProof } from './utils'
 import ethereum from './blockchains/ethereum'
+import filecoin from './blockchains/filecoin'
 
 const findDID = (did: string): string | undefined => did.match(/(did:(3|muport):[a-zA-Z0-9])\w+/)?.[0]
 
 const handlers = {
-  [ethereum.namespace]: ethereum
+  [ethereum.namespace]: ethereum,
+  [filecoin.namespace]: filecoin
 }
 
 async function createLink (
   did: string,
-  account: AccountID,
+  account: AccountID | string,
   provider: any,
   opts: any = {}
 ): Promise<LinkProof> {
@@ -44,7 +46,7 @@ async function validateLink (proof: LinkProof): Promise<LinkProof | null> {
 
 async function authenticate (
   message: string,
-  account: AccountID,
+  account: AccountID | string,
   provider: any
 ): Promise<string> {
   if (typeof account === 'string') account = new AccountID(account)

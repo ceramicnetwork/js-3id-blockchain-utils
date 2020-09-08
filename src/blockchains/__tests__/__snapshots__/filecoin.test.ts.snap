@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`authenticate mainnet 1`] = `"4yGIDAltS6TIG+8LJgrhxAJ7E8wkqWoKWfSH9JSEUpwlXiK1BMGIT1t1tP5kgkHZoMS+brFbkihtBCIVcChsTwE="`;
+
+exports[`authenticate testnet 1`] = `"mZT9lhJBvrg+/elKOI/uwJWnsl/buGKZzNj2liujgqotMFVqOJ2KJVPFHvbvIJDbtpFjlcbBsAXtTeNwHePRnQE="`;
+
+exports[`createLink generate proof on mainnet 1`] = `
+Object {
+  "account": "f1ymbkm43ysdiruibji6c6m2iy5bxwbuv5d6cdqmy@fil:f",
+  "message": "Create a new 3Box profile
+
+- 
+Your unique profile ID is did:3:bafysdfwefwe",
+  "signature": "96cdzLNoVT0SQwbOR74IGi9RGj01wzXkJoZXecwLfPFg3OzPQgJRscTo0AI65ODHr9G8bLBmt25DSIEovcV3GwE=",
+  "type": "eoa-tx",
+  "version": 2,
+}
+`;
+
+exports[`createLink generate proof on testnet 1`] = `
+Object {
+  "account": "t17lxg2i2otnl7mmpw2ocd6o4e3b4un3272vny6ka@fil:t",
+  "message": "Create a new 3Box profile
+
+- 
+Your unique profile ID is did:3:bafysdfwefwe",
+  "signature": "BmWZPnujAFNLv55QSaHf2NaVW9KsvsFc3tB4WIjKnz4nWWhKEpTuS23SSNF+zQIxCrzKGeV+85evxbGUmlvHkAE=",
+  "type": "eoa-tx",
+  "version": 2,
+}
+`;

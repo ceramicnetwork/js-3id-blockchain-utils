@@ -11,7 +11,12 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "baseUrl": "./packages"
+    "baseUrl": "./packages",
+    "outDir": "lib",
+    "rootDir": "src",
+    "typeRoots": [
+      "./@types", "./node_modules/@types"
+    ]
   },
   "exclude": [
     "node_modules",
@@ -19,9 +24,5 @@
     "**/*.spec.ts",
     "**/*.test.ts"
   ],
-  "compilerOptions": {
-    "outDir": "lib",
-    "rootDir": "src"
-  },
   "include": ["./src/**/*"]
 }

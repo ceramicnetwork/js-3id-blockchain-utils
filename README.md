@@ -53,6 +53,7 @@ Below you can see a table which lists supported blockchains and their provider o
 | Blockchain | CAIP-2 namespace | Supported providers             |
 |------------|-----------|---------------------------------|
 | Ethereum   | [eip155](https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-3.md)    | metamask-like ethereum provider |
+| Filecoin   | fil       | [Filecoin Wallet Provider](https://github.com/openworklabs/filecoin-wallet-provider) |
 
 ## Maintainers
 [@oed](https://github.com/oed)
