@@ -39,7 +39,7 @@
     "typescript": "^3.9.3",
     "@zondax/filecoin-signing-tools": "^0.6.3"
   },
-  "peerDependencies": {
+  "optionalDependencies": {
     "@zondax/filecoin-signing-tools": "^0.6.3"
   },
   "jest": {
