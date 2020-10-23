@@ -24,7 +24,7 @@ export interface ConsentMessage {
 
 function getConsentMessage (did: string, addTimestamp: boolean): ConsentMessage {
   const res: any = {
-    message: 'Create a new 3Box profile' + '\n\n' + '- \n' + 'Your unique profile ID is ' + did
+    message: 'Create a new account link to your identity.' + '\n\n' + did
   }
   if (addTimestamp) {
     res.timestamp = Math.floor(new Date().getTime() / 1000)

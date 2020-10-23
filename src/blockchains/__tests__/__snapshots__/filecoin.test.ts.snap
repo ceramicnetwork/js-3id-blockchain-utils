@@ -7,11 +7,10 @@ exports[`authenticate testnet 1`] = `"mZT9lhJBvrg+/elKOI/uwJWnsl/buGKZzNj2liujgq
 exports[`createLink generate proof on mainnet 1`] = `
 Object {
   "account": "f1ymbkm43ysdiruibji6c6m2iy5bxwbuv5d6cdqmy@fil:f",
-  "message": "Create a new 3Box profile
+  "message": "Create a new account link to your identity.
 
-- 
-Your unique profile ID is did:3:bafysdfwefwe",
-  "signature": "96cdzLNoVT0SQwbOR74IGi9RGj01wzXkJoZXecwLfPFg3OzPQgJRscTo0AI65ODHr9G8bLBmt25DSIEovcV3GwE=",
+did:3:bafysdfwefwe",
+  "signature": "ptn0BGzsCTD3tPjOtuCMhigE3A2BFadJkOahJ+AuPxNCCGSKTIfBVLb55QKPf0pl14+6YUnRAvdwk8lFc98aZAE=",
   "type": "eoa-tx",
   "version": 2,
 }
@@ -20,11 +19,10 @@ Your unique profile ID is did:3:bafysdfwefwe",
 exports[`createLink generate proof on testnet 1`] = `
 Object {
   "account": "t17lxg2i2otnl7mmpw2ocd6o4e3b4un3272vny6ka@fil:t",
-  "message": "Create a new 3Box profile
+  "message": "Create a new account link to your identity.
 
-- 
-Your unique profile ID is did:3:bafysdfwefwe",
-  "signature": "BmWZPnujAFNLv55QSaHf2NaVW9KsvsFc3tB4WIjKnz4nWWhKEpTuS23SSNF+zQIxCrzKGeV+85evxbGUmlvHkAE=",
+did:3:bafysdfwefwe",
+  "signature": "GuG1fGJQwLs1t33bp/esXhWCU3wIzENq9FBjntcQv2wNmk4Iu9D5KsnU3LpH8rGKPliQWHmkod0dOaJYrAS13QE=",
   "type": "eoa-tx",
   "version": 2,
 }
