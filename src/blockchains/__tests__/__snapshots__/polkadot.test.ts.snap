@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Blockchain: Polkadot authenticate authenticate with ed25519 1`] = `"0x0c4649442e6acde7d1b4d7640d4330f5a8770394093cf77eda29136a555471a6c4981c3f6e6e22747abc473d539588463bcaaf53f870389e9bed279db4fe5e00"`;
+
+exports[`Blockchain: Polkadot authenticate authenticate with secp256k 1`] = `"0x153026f67d745e8ac03ae181ff5e34cf7c8c1f0898d9573824ae89ff4243efe792747234a4706cc0becf3cddfffdc04a6ee70b9de7a841444a133dc6ed13777800"`;
+
+exports[`Blockchain: Polkadot authenticate authenticate with sr25519 1`] = `"0x96a1ed246c33777e63aa800ed73bc3a95659f1cc307e807c11db0833f0864b3eae96a5adb26e3d91c6bbc57105370eb5e57b44b40b38ebd8c8ebfeb073eacc84"`;
+
+exports[`Blockchain: Polkadot createLink create proof with ed25519 1`] = `
+Object {
+  "account": "5EEvMbuaJQxxPorGtzY2qUYqM3akRrnD36bZD4PomfpLdrtx@polkadot:b0a8d493285c2df73290dfb7e61f870f",
+  "message": "0x4372656174652061206e6577206163636f756e74206c696e6b20746f20796f7572206964656e746974792e0a0a6469643a333a626166797364667765667765",
+  "signature": "0xf457de8941e928ab8dfe6ac3d6b1fdc3b736b839b83fcd4f5e4697d20c3ff3d5c79654fc36dc401e34c311593b577753077f18474182f576c0215461277a1e00",
+  "type": "eoa",
+  "version": 2,
+}
+`;
+
+exports[`Blockchain: Polkadot createLink create proof with secp256k 1`] = `
+Object {
+  "account": "5GuAnwx9uKSQxKZB8moxoaX4ceehoCYu4XYMjJkKtm2QDgqC@polkadot:b0a8d493285c2df73290dfb7e61f870f",
+  "message": "0x4372656174652061206e6577206163636f756e74206c696e6b20746f20796f7572206964656e746974792e0a0a6469643a333a626166797364667765667765",
+  "signature": "0x78e60152aacd9ab05ce3ad951a640d69f1ed0e24f8b81b78f695b9b1e3f2c83d5446b76dd7cbe5e18db41ddee3ffaef2b100003b8263e93d1d2a4ffd37b9cef601",
+  "type": "eoa",
+  "version": 2,
+}
+`;
+
+exports[`Blockchain: Polkadot createLink create proof with sr25519 1`] = `
+Object {
+  "account": "5CXU7u72Gz9Jqo6FdAwzSsxX5JhdRwMj2UZ4xrAEoo3AyySx@polkadot:b0a8d493285c2df73290dfb7e61f870f",
+  "message": "0x4372656174652061206e6577206163636f756e74206c696e6b20746f20796f7572206964656e746974792e0a0a6469643a333a626166797364667765667765",
+  "signature": "0x50953d38a7cdb7a8f04e0c5399b8a0496a7c714a71e657908dfcbc6e319e87476b04be188d7e1b90ee21ea4a23b6f7c3bc72db18cd37832281847b3dd625538f",
+  "type": "eoa",
+  "version": 2,
+}
+`;
