@@ -4,6 +4,7 @@ import { Contract } from '@ethersproject/contracts'
 import * as providers from "@ethersproject/providers"
 import { AccountID } from 'caip'
 import { sha256  } from 'js-sha256'
+import * as uint8arrays from 'uint8arrays'
 
 const ADDRESS_TYPES = {
   ethereumEOA: 'ethereum-eoa',
@@ -18,6 +19,12 @@ const namespace = 'eip155'
 function normalizeAccountId (account: AccountID): AccountID {
   account.address = account.address.toLowerCase()
   return account
+}
+
+function utf8toHex(message: string): string {
+  const bytes = uint8arrays.fromString(message)
+  const hex = uint8arrays.toString(bytes, 'base16')
+  return '0x' + hex
 }
 
 async function safeSend (data: RpcMessage, provider: any): Promise<any> {
@@ -59,7 +66,7 @@ async function createEthLink (
   opts: any = {}
 ): Promise<LinkProof> {
   const { message, timestamp } = getConsentMessage(did, !opts.skipTimestamp)
-  const hexMessage = '0x' + Buffer.from(message, 'utf8').toString('hex')
+  const hexMessage = utf8toHex(message)
   const payload = encodeRpcMessage('personal_sign', [hexMessage, account.address])
   const signature = await safeSend(payload, provider)
   const proof: LinkProof = {
@@ -131,7 +138,7 @@ async function validateErc1271Link (proof: LinkProof): Promise<LinkProof | null>
   const account = new AccountID(proof.account)
   const provider = getEthersProvider(account.chainId.reference)
   const contract = new Contract(account.address, ERC1271_ABI, provider)
-  const message = '0x' + Buffer.from(proof.message, 'utf8').toString('hex')
+  const message = utf8toHex(proof.message)
   const returnValue = await contract.isValidSignature(message, proof.signature)
 
   return returnValue === MAGIC_ERC1271_VALUE ? proof : null
@@ -151,7 +158,7 @@ async function authenticate(
 ): Promise<string> {
   if (account) account = normalizeAccountId(account)
   if (provider.isAuthereum) return provider.signMessageWithSigningKey(message)
-  const hexMessage  = '0x' + Buffer.from(message, 'utf8').toString('hex')
+  const hexMessage  = utf8toHex(message)
   const payload = encodeRpcMessage('personal_sign', [hexMessage, account.address])
   const signature = await safeSend(payload, provider)
   if (account) {

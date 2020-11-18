@@ -1,5 +1,5 @@
-declare module "@zondax/filecoin-signing-tools/nodejs" {
-  export * from "@zondax/filecoin-signing-tools"
+declare module "@zondax/filecoin-signing-tools/nodejs/filecoin_signer_wasm" {
+  export * from "@zondax/filecoin-signing-tools";
 }
 
 declare module "@zondax/filecoin-signing-tools" {
@@ -7,28 +7,30 @@ declare module "@zondax/filecoin-signing-tools" {
     address: string;
     public_raw: Uint8Array;
     private_raw: Uint8Array;
-    public_hexstring: Uint8Array;
-    private_hexstring: Uint8Array;
-    public_base64: Uint8Array;
-    private_base64: Uint8Array;
+    public_hexstring: string;
+    private_hexstring: string;
+    public_base64: string;
+    private_base64: string;
   }
 
   export interface MessageParams {
-    from: string;
-    to: string;
-    value: string;
-    gasPrice: string;
-    gasLimit: number;
-    nonce: number;
-    method: number;
-    params: string;
+    From: string;
+    To: string;
+    Value: string;
+    GasPrice: string;
+    GasLimit: number;
+    GasFeeCap: string;
+    GasPremium: string;
+    Nonce: number;
+    Method: number;
+    Params: string;
   }
 
-  export interface TransactionSignResponse {
-    message: MessageParams;
-    signature: {
-      type: number;
-      data: string;
+  export interface TransactionSignLotusResponse {
+    Message: MessageParams;
+    Signature: {
+      Type: number;
+      Data: string;
     };
   }
 
@@ -36,10 +38,14 @@ declare module "@zondax/filecoin-signing-tools" {
       privateKey: string,
       testnet?: boolean
   ): ExtendedKey;
-  export function transactionSign(
+  export function keyRecoverBLS(
+      privateKey: string,
+      testnet?: boolean
+  ): ExtendedKey;
+  export function transactionSignLotus(
       message: MessageParams,
-      privateKeyHex: Uint8Array
-  ): TransactionSignResponse;
+      privateKey: string
+  ): TransactionSignLotusResponse;
   export function verifySignature(signature: any, message: any): any;
   export function transactionSerialize(message: any): any;
 }
