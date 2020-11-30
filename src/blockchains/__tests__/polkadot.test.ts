@@ -51,7 +51,7 @@ describe('Blockchain: Polkadot', () => {
         test('create proof with sr25519', async () => {
             const account = addressToAccountID(keyPairSr25519.address)
             const provider = new SingleAccountSigner(registry, keyPairSr25519)
-            const proof = await polkadot.createLink(did, account, provider)
+            const proof = await polkadot.createLink(did, account, provider, {skipTimestamp: true})
             expect(proof.account).toMatchSnapshot()
             expect(proof.message).toMatchSnapshot()
             expect(proof.type).toMatchSnapshot()
@@ -59,13 +59,13 @@ describe('Blockchain: Polkadot', () => {
         test('create proof with ed25519', async () => {
             const account = addressToAccountID(keyPairEd25519.address)
             const provider = new SingleAccountSigner(registry, keyPairEd25519)
-            const proof = await polkadot.createLink(did, account, provider)
+            const proof = await polkadot.createLink(did, account, provider, {skipTimestamp: true})
             expect(proof).toMatchSnapshot()
         })
         test('create proof with secp256k', async () => {
             const account = addressToAccountID(keyPairSecp256k.address)
             const provider = new SingleAccountSigner(registry, keyPairSecp256k)
-            const proof = await polkadot.createLink(did, account, provider)
+            const proof = await polkadot.createLink(did, account, provider, {skipTimestamp: true})
             expect(proof).toMatchSnapshot()
         })
     })
@@ -74,19 +74,19 @@ describe('Blockchain: Polkadot', () => {
         test('validate proof with sr25519', async () => {
             const account = addressToAccountID(keyPairSr25519.address)
             const provider = new SingleAccountSigner(registry, keyPairSr25519)
-            const proof = await polkadot.createLink(did, account, provider)
+            const proof = await polkadot.createLink(did, account, provider, {skipTimestamp: true})
             await expect(polkadot.validateLink(proof)).resolves.toEqual(proof)
         })
         test('validate proof with ed25519', async () => {
             const account = addressToAccountID(keyPairEd25519.address)
             const provider = new SingleAccountSigner(registry, keyPairEd25519)
-            const proof = await polkadot.createLink(did, account, provider)
+            const proof = await polkadot.createLink(did, account, provider, {skipTimestamp: true})
             await expect(polkadot.validateLink(proof)).resolves.toEqual(proof)
         })
         test('validate proof with secp256k', async () => {
             const account = addressToAccountID(keyPairSecp256k.address)
             const provider = new SingleAccountSigner(registry, keyPairSecp256k)
-            const proof = await polkadot.createLink(did, account, provider)
+            const proof = await polkadot.createLink(did, account, provider, {skipTimestamp: true})
             await expect(polkadot.validateLink(proof)).resolves.toEqual(proof)
         })
     })

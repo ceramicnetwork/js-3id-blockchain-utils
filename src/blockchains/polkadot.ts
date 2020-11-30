@@ -9,7 +9,8 @@ const namespace = 'polkadot'
 const stringHex = (str: string): string => `0x${uint8arrays.toString(uint8arrays.fromString(str), 'base16')}`
 
 async function createLink (did: string, account: AccountID, signer: any, opts: BlockchainHandlerOpts): Promise<LinkProof> {
-    const linkMessageHex = stringHex(getConsentMessage(did, false).message)
+    const { message, timestamp } = getConsentMessage(did, !opts?.skipTimestamp)
+    const linkMessageHex = stringHex(message)
     const res = await signer.signRaw({address: account.address, data: linkMessageHex})
     const proof: LinkProof = {
         version: 2,
@@ -18,6 +19,7 @@ async function createLink (did: string, account: AccountID, signer: any, opts: B
         signature: res.signature,
         account: account.toString()
     }
+    if (!opts?.skipTimestamp) proof.timestamp = timestamp
     return proof
 }
 
