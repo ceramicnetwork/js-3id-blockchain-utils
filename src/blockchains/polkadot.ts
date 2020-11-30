@@ -21,9 +21,11 @@ async function createLink (did: string, account: AccountID, signer: any, opts: B
     return proof
 }
 
+// polkadot sr25519 signatures inlcude randomness, need deterministic function to currently implment authentication
 async function authenticate(message: string, account: AccountID, signer: any): Promise<string> {
-    const res = await signer.signRaw({address: account.address, data: stringHex(message)})
-    return res.signature
+    throw new Error('authenticate: polkadot authentication not yet supported')
+    // const res = await signer.signRaw({address: account.address, data: stringHex(message)})
+    // return res.signature
 }
 
 async function validateLink (proof: LinkProof): Promise<LinkProof | null> {
