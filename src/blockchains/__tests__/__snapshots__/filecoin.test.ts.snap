@@ -12,7 +12,7 @@ Object {
   "message": "Create a new account link to your identity.
 
 did:3:bafysdfwefwe",
-  "signature": "1FtigSxmRbUCdjAAgotHcbq5al3vBkMCD8Fg4JhNj5siND0Orhol21/zLS52gkn19OiXUe00FukDv/KSErWD6gE=",
+  "signature": "ozDCg49gdxLlfvZ+3TzsmXWk/ubtmNKFn4XmF23qWzk+NG2KYrp9dDJbdJO1VuoiiHmcDHf9Dds1/pxAWJU6oQA=",
   "type": "eoa-tx",
   "version": 2,
 }
@@ -24,7 +24,7 @@ Object {
   "message": "Create a new account link to your identity.
 
 did:3:bafysdfwefwe",
-  "signature": "qKJkFRgqlN7uZoP8lyBJgKU7mx2yRovCthnQqLkL3OdvU1c8i2Mm9pI//uEEKoR8ClnF+qALswY/BFaccnDI81jHc6LgkPCKL5mNDjcj4/0HF21poLKSFXFPlI+ErJdF",
+  "signature": "rXuSytpa48/cGn9m4Hncxguoz7KmYkx4qN+Fos/PELXbVcsaer85Lytz1//LSVlVDG6B+3zM3x4waL0xRDSgW15VPeLL3N2c1Yski9mO6OVVdEMS0b87vPZE8I/CvMpw",
   "type": "eoa-tx",
   "version": 2,
 }
@@ -36,7 +36,7 @@ Object {
   "message": "Create a new account link to your identity.
 
 did:3:bafysdfwefwe",
-  "signature": "YpSd1/zXbw4ga2v9Vihm8/mioRhBQsDhfHKoFuuFysoW3dsKwhiusuyZgF0/F1iIpcfDWuE6WzlbkDSHdoSebAE=",
+  "signature": "9duC0YnGDAv6rSaki+/0FDLLiuNEHWJ3gsy92zaX6EliD0kQnCzHa5QKOeYRQzO51eamD72wSYY4Knl4WvBDeAE=",
   "type": "eoa-tx",
   "version": 2,
 }

@@ -23,18 +23,18 @@ function asTransaction(address: string, message: string): MessageParams {
 }
 
 export async function createLink (did: string, account: AccountID, provider: any, opts: BlockchainHandlerOpts): Promise<LinkProof> {
-    const consentMessage = getConsentMessage(did, !opts.skipTimestamp)
+    const { message, timestamp } = getConsentMessage(did, !opts?.skipTimestamp)
     const addresses = await provider.getAccounts()
-    const payload = asTransaction(addresses[0], JSON.stringify(consentMessage))
+    const payload = asTransaction(addresses[0], message)
     const signatureResponse = await provider.sign(account.address, payload)
     const proof: LinkProof = {
         version: 2,
         type: 'eoa-tx',
-        message: consentMessage.message,
+        message: message,
         signature: signatureResponse.Signature.Data,
         account: account.toString()
     }
-    if (!opts.skipTimestamp) proof.timestamp = consentMessage.timestamp
+    if (!opts?.skipTimestamp) proof.timestamp = timestamp
     return proof
 }
 
@@ -48,13 +48,7 @@ export async function authenticate(message: string, account: AccountID, provider
 export async function validateLink (proof: LinkProof): Promise<LinkProof | null> {
     const signingTools = await import("@zondax/filecoin-signing-tools")
     const account = new AccountID(proof.account)
-    const consentMessage: ConsentMessage = {
-        message: proof.message,
-    }
-    if (proof.timestamp) {
-        consentMessage.timestamp = proof.timestamp
-    }
-    const payload = asTransaction(account.address, JSON.stringify(consentMessage))
+    const payload = asTransaction(account.address, proof.message)
     const transaction = signingTools.transactionSerialize(payload);
     try {
         const recover = signingTools.verifySignature(proof.signature, transaction);
