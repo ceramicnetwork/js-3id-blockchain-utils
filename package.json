@@ -49,6 +49,9 @@
     "testPathIgnorePatterns": [
       "node_modules",
       "lib"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@zondax/filecoin-signing-tools$": "@zondax/filecoin-signing-tools/nodejs"
+    }
   }
 }
