@@ -1,5 +1,5 @@
 import {EOSIOProvider} from "@smontero/eosio-local-provider";
-import {authenticate, createLink, validateLink} from "../eos";
+import {authenticate, createLink, validateLink} from "../eosio";
 import {AccountID} from "caip";
 
 jest.setTimeout(15000)
