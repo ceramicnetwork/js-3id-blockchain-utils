@@ -38,7 +38,6 @@
     "eth-sig-util": "^2.5.3",
     "ganache-core": "^2.13.1",
     "jest": "^25.1.0",
-    "js-sha256": "^0.9.0",
     "typescript": "^3.9.3",
     "@zondax/filecoin-signing-tools": "^0.12.0"
   },
@@ -49,6 +48,9 @@
     "testPathIgnorePatterns": [
       "node_modules",
       "lib"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@zondax/filecoin-signing-tools$": "@zondax/filecoin-signing-tools/nodejs"
+    }
   }
 }
