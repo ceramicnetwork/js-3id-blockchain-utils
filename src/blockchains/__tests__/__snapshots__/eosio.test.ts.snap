@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`authenticate Jungle 1`] = `"SIG_K1_KdL8WwE9UBDyHUR8LRG1JsYYUpXuKSnyEn291XBobcVn5Eyvktr7LZvrb5mCtYmJCi8vqHjXcrrAW5mnALrRhNPUhUTEky"`;
+exports[`authenticate Jungle 1`] = `"SIG_K1_KXZPDHPA31QgktmBAzP6TkT2Zddw35Y4NL6TjGZXA8LJ5ofpKGSgKZz2pioKmSktz6qn52qGcJowLURTnYsfJKP9YfKeG8"`;
 
-exports[`authenticate Telos Testnet 1`] = `"SIG_K1_Kf9BzL8Sj3RsZdL995ZUYzqT71CJTv2vDG5WCKs9BxKrKpXXp9AzGf5vaoAbbZbd3KM3Mtux8GcDUz7Emcu8xwz6TkGiR4"`;
+exports[`authenticate Telos Testnet 1`] = `"SIG_K1_KbEWFx464rYHVZ5jNsB6RRc9bD9pfcDqGEBCB2qJmcAxbut7ebvz3SS6XCcerfWRHpqw9mMNsTzYSzDsit2k4KVDHFdQpZ"`;
 
 exports[`createLink generate proof on jungle testnet 1`] = `
 Object {
@@ -10,7 +10,7 @@ Object {
   "message": "Create a new account link to your identity.
 
 did:3:bafysdfwefwe",
-  "signature": "SIG_K1_JvJUYfMT6TuuJxQCwLmp4ykJrMoXUToVMUg1bH7oecSehziSFZecxZYWMFmaqMKtJgz1Wxm4Zp8HcQYbZDiSUj8eaScMBZ",
+  "signature": "SIG_K1_JyGLbHtvMUbnntVkkTwmndV1biVHGERwawiyAWwEz2Mng7Q4At9FFbboYgJUhMjA6GBhvBDEHjLXLZHS4B53FxFHmSbqDC",
   "type": "eosio",
   "version": 1,
 }
@@ -22,7 +22,7 @@ Object {
   "message": "Create a new account link to your identity.
 
 did:3:bafysdfwefwe",
-  "signature": "SIG_K1_Jx4TAm5W7CBBpT8wAxAS3KYm5ZFX4keb8yQorhuAAqth4LhmroGFyvQMWYJhxGjbhzpd8mSa96dmwgsX2jFyVaoBsHfvPS",
+  "signature": "SIG_K1_KXEPcYBUAigcwcZJR6eRgynzizmb78aodN8y7kk5bnvN6uSn8SYWxbFPzzQUZoM2CDwju8HMfhQDRTVoFtWVzGNMmz32Nm",
   "type": "eosio",
   "version": 1,
 }

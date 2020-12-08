@@ -15,11 +15,8 @@ function toCAIPChainId(chainId: string): string{
   return chainId.substr(0,32)
 }
 
-function chopStr (str: string, size: number): Array<string>{
-  if (!str) return []
-  size = ~~size
-  const chunks = size > 0 ? str.match(new RegExp('.{1,' + size + '}', 'g')) : [str]
-  return chunks || []
+function sanitize (str: string, size: number): string{
+  return str.replace(/\s/g, ' ').replace(new RegExp(`(\\S{${size}})`, 'g'), '$1 ')
 }
 
 function toPayload(message: string, accountID: AccountID ): string {
@@ -28,7 +25,7 @@ function toPayload(message: string, accountID: AccountID ): string {
     chainId
   } = accountID
   const payload = `${message} [For: ${address} on chain: ${chainId}]`
-  return chopStr(payload, maxWordLength).join(' ')
+  return sanitize(payload, maxWordLength)
 }
 
 async function toSignedPayload(
@@ -79,6 +76,7 @@ export async function createLink (did: string, accountID: AccountID, provider: a
       account: accountID.toString()
   }
   if (!opts.skipTimestamp) proof.timestamp = consentMessage.timestamp
+  console.log('proof: ', proof)
   return proof
 }
 
