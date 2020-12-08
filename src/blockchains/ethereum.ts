@@ -86,10 +86,12 @@ async function createErc1271Link (
   provider: any,
   opts: any
 ): Promise<LinkProof> {
-  const res = await createEthLink(did, account, provider, opts)
+  const ethLinkAccount = opts?.eoaSignAccount || account
+  const res = await createEthLink(did, ethLinkAccount, provider, opts)
   await validateChainId(account, provider)
   return Object.assign(res, {
-    type: ADDRESS_TYPES.erc1271
+    type: ADDRESS_TYPES.erc1271,
+    account: account.toString()
   })
 }
 
