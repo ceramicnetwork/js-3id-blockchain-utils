@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Blockchain: Polkadot createLink create proof with ed25519 1`] = `
+Object {
+  "account": "5EEvMbuaJQxxPorGtzY2qUYqM3akRrnD36bZD4PomfpLdrtx@polkadot:b0a8d493285c2df73290dfb7e61f870f",
+  "message": "0x4372656174652061206e6577206163636f756e74206c696e6b20746f20796f7572206964656e746974792e0a0a6469643a333a626166797364667765667765",
+  "signature": "0xf457de8941e928ab8dfe6ac3d6b1fdc3b736b839b83fcd4f5e4697d20c3ff3d5c79654fc36dc401e34c311593b577753077f18474182f576c0215461277a1e00",
+  "type": "eoa",
+  "version": 2,
+}
+`;
+
+exports[`Blockchain: Polkadot createLink create proof with secp256k 1`] = `
+Object {
+  "account": "5GuAnwx9uKSQxKZB8moxoaX4ceehoCYu4XYMjJkKtm2QDgqC@polkadot:b0a8d493285c2df73290dfb7e61f870f",
+  "message": "0x4372656174652061206e6577206163636f756e74206c696e6b20746f20796f7572206964656e746974792e0a0a6469643a333a626166797364667765667765",
+  "signature": "0x78e60152aacd9ab05ce3ad951a640d69f1ed0e24f8b81b78f695b9b1e3f2c83d5446b76dd7cbe5e18db41ddee3ffaef2b100003b8263e93d1d2a4ffd37b9cef601",
+  "type": "eoa",
+  "version": 2,
+}
+`;
+
+exports[`Blockchain: Polkadot createLink create proof with sr25519 1`] = `"5CXU7u72Gz9Jqo6FdAwzSsxX5JhdRwMj2UZ4xrAEoo3AyySx@polkadot:b0a8d493285c2df73290dfb7e61f870f"`;
+
+exports[`Blockchain: Polkadot createLink create proof with sr25519 2`] = `"0x4372656174652061206e6577206163636f756e74206c696e6b20746f20796f7572206964656e746974792e0a0a6469643a333a626166797364667765667765"`;
+
+exports[`Blockchain: Polkadot createLink create proof with sr25519 3`] = `"eoa"`;
