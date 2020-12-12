@@ -3,6 +3,7 @@ import { LinkProof } from './utils'
 import ethereum from './blockchains/ethereum'
 import filecoin from './blockchains/filecoin'
 import polkadot from './blockchains/polkadot'
+import eosio from './blockchains/eosio'
 
 const findDID = (did: string): string | undefined => did.match(/(did:(3|muport):[a-zA-Z0-9])\w+/)?.[0]
 
@@ -10,6 +11,7 @@ const handlers = {
   [ethereum.namespace]: ethereum,
   [filecoin.namespace]: filecoin, 
   [polkadot.namespace]: polkadot,
+  [eosio.namespace]: eosio
 }
 
 async function createLink (

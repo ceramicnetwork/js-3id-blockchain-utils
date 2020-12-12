@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`authenticate Jungle 1`] = `"SIG_K1_KXZPDHPA31QgktmBAzP6TkT2Zddw35Y4NL6TjGZXA8LJ5ofpKGSgKZz2pioKmSktz6qn52qGcJowLURTnYsfJKP9YfKeG8"`;
+
+exports[`authenticate Telos Testnet 1`] = `"SIG_K1_KbEWFx464rYHVZ5jNsB6RRc9bD9pfcDqGEBCB2qJmcAxbut7ebvz3SS6XCcerfWRHpqw9mMNsTzYSzDsit2k4KVDHFdQpZ"`;
+
+exports[`createLink generate proof on jungle testnet 1`] = `
+Object {
+  "account": "idx3idctest1@eosio:2a02a0053e5a8cf73a56ba0fda11e4d9",
+  "message": "Create a new account link to your identity.
+
+did:3:bafysdfwefwe",
+  "signature": "SIG_K1_JyGLbHtvMUbnntVkkTwmndV1biVHGERwawiyAWwEz2Mng7Q4At9FFbboYgJUhMjA6GBhvBDEHjLXLZHS4B53FxFHmSbqDC",
+  "type": "eosio",
+  "version": 1,
+}
+`;
+
+exports[`createLink generate proof on telos testnet 1`] = `
+Object {
+  "account": "testuser1111@eosio:1eaa0824707c8c16bd25145493bf062a",
+  "message": "Create a new account link to your identity.
+
+did:3:bafysdfwefwe",
+  "signature": "SIG_K1_KXEPcYBUAigcwcZJR6eRgynzizmb78aodN8y7kk5bnvN6uSn8SYWxbFPzzQUZoM2CDwju8HMfhQDRTVoFtWVzGNMmz32Nm",
+  "type": "eosio",
+  "version": 1,
+}
+`;

@@ -32,22 +32,25 @@
     "@polkadot/keyring": "^3.6.1",
     "@polkadot/types": "^2.7.1",
     "@polkadot/util-crypto": "^3.6.1",
+    "@glif/filecoin-address": "^1.1.0-beta.1",
+    "@glif/local-managed-provider": "^1.1.0-beta.1",
+    "@smontero/eosio-local-provider": "0.0.3",
+    "@smontero/eosio-signing-tools": "0.0.6",
     "@types/jest": "^25.2.3",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
+    "@zondax/filecoin-signing-tools": "^0.12.0",
     "babel-jest": "^25.1.0",
-    "@glif/local-managed-provider": "^1.1.0-beta.1",
-    "@glif/filecoin-address": "^1.1.0-beta.1",
     "eslint": "^6.8.0",
     "eslint-plugin-jest": "^23.8.2",
     "eth-sig-util": "^2.5.3",
     "ganache-core": "^2.13.1",
     "jest": "^25.1.0",
-    "typescript": "^3.9.3",
-    "@zondax/filecoin-signing-tools": "^0.12.0"
+    "typescript": "^3.9.3"
   },
   "optionalDependencies": {
     "@polkadot/util-crypto": "^3.6.1",
+    "@smontero/eosio-signing-tools": "0.0.6",
     "@zondax/filecoin-signing-tools": "^0.12.0"
   },
   "jest": {
