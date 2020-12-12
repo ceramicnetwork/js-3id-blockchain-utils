@@ -52,9 +52,7 @@ async function toSignedPayload(
   const payload = toPayload(message, accountID)
   const [key] = await provider.getKeys()
   return provider.signArbitrary(key, payload)
-
 }
-
 
 export async function authenticate(
   message: string,
@@ -76,7 +74,6 @@ export async function createLink (did: string, accountID: AccountID, provider: a
       account: accountID.toString()
   }
   if (!opts.skipTimestamp) proof.timestamp = consentMessage.timestamp
-  console.log('proof: ', proof)
   return proof
 }
 
@@ -89,20 +86,18 @@ export async function validateLink (proof: LinkProof): Promise<LinkProof | null>
   const accountID = new AccountID(account)
   const {address, chainId} = accountID
   try {
-
-      const success = await SigningTools.verifySignature({
-        chainId: chainId.reference,
-        account: address,
-        signature,
-        data: toPayload(message, accountID)
-      });
-      return success ? proof : null
+    const success = await SigningTools.verifySignature({
+      chainId: chainId.reference,
+      account: address,
+      signature,
+      data: toPayload(message, accountID)
+    })
+    return success ? proof : null
   } catch (error) {
-      // console.error(error)
+      console.warn(error)
       return null
   }
 }
-
 
 const Handler: BlockchainHandler = {
   namespace,
