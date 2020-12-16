@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`authenticate Jungle 1`] = `"SIG_K1_KXZPDHPA31QgktmBAzP6TkT2Zddw35Y4NL6TjGZXA8LJ5ofpKGSgKZz2pioKmSktz6qn52qGcJowLURTnYsfJKP9YfKeG8"`;
+exports[`authenticate Jungle 1`] = `"0xda6a3b61f0849251071ebceb94c874a3517772cc2a865c8c5e078c2e6646a0c2"`;
 
-exports[`authenticate Telos Testnet 1`] = `"SIG_K1_KbEWFx464rYHVZ5jNsB6RRc9bD9pfcDqGEBCB2qJmcAxbut7ebvz3SS6XCcerfWRHpqw9mMNsTzYSzDsit2k4KVDHFdQpZ"`;
+exports[`authenticate Telos Testnet 1`] = `"0x521674ea7031af056c7fcf69e2c3ff6f4bea888158941a7b6dc789d0fe44cf53"`;
 
 exports[`createLink generate proof on jungle testnet 1`] = `
 Object {

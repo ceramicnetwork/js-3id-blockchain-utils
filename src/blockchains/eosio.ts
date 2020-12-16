@@ -2,6 +2,7 @@ import { AccountID } from 'caip'
 import {SigningTools} from '@smontero/eosio-signing-tools'
 import {BlockchainHandler, BlockchainHandlerOpts} from "../blockchain-handler";
 import { getConsentMessage, LinkProof } from '../utils'
+import { sha256  } from 'js-sha256'
 
 const maxWordLength = 12
 const namespace = 'eosio'
@@ -60,7 +61,7 @@ export async function authenticate(
   provider: any
 ): Promise<string> {
   const signedPayload = await toSignedPayload(message, accountID, provider)
-  return signedPayload
+  return `0x${sha256(signedPayload)}`
 }
 
 export async function createLink (did: string, accountID: AccountID, provider: any, opts: BlockchainHandlerOpts): Promise<LinkProof> {
