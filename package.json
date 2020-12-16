@@ -50,8 +50,7 @@
   },
   "optionalDependencies": {
     "@polkadot/util-crypto": "^3.6.1",
-    "@smontero/eosio-signing-tools": "0.0.6",
-    "@zondax/filecoin-signing-tools": "^0.12.0"
+    "@smontero/eosio-signing-tools": "0.0.6"
   },
   "jest": {
     "testPathIgnorePatterns": [

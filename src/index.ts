@@ -1,7 +1,7 @@
 import { AccountID } from 'caip'
 import { LinkProof } from './utils'
 import ethereum from './blockchains/ethereum'
-import filecoin from './blockchains/filecoin'
+// import filecoin from './blockchains/filecoin'
 import polkadot from './blockchains/polkadot'
 import eosio from './blockchains/eosio'
 
@@ -9,7 +9,7 @@ const findDID = (did: string): string | undefined => did.match(/(did:(3|muport):
 
 const handlers = {
   [ethereum.namespace]: ethereum,
-  [filecoin.namespace]: filecoin, 
+  // [filecoin.namespace]: filecoin, 
   [polkadot.namespace]: polkadot,
   [eosio.namespace]: eosio
 }
