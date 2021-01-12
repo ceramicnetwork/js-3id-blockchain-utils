@@ -54,6 +54,8 @@ Below you can see a table which lists supported blockchains and their provider o
 |------------|-----------|---------------------------------|
 | Ethereum   | [eip155](https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-3.md)    | metamask-like ethereum provider |
 | Filecoin   | fil       | [Filecoin Wallet Provider](https://github.com/openworklabs/filecoin-wallet-provider) |
+| Cosmos   | [cosmos](https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-5.md)       | |
+| EOS   | [eosio](https://github.com/ChainAgnostic/CAIPs/blob/master/CAIPs/caip-7.md)       | |
 
 ## Maintainers
 [@oed](https://github.com/oed)
