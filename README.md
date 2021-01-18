@@ -1,3 +1,9 @@
+# Deprecated!
+This repo has been deprecated in favour of `@ceramicnetwork/blockchain-utils-linking` and `@ceramicnetwork/blockchain-utils-validation`. See [ceramicnetwork/js-ceramic](https://github.com/ceramicnetwork/js-ceramic) for more information.
+
+
+
+
 # 3id-blockchain-utils
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 [![CircleCI](https://img.shields.io/circleci/project/github/ceramicnetwork/js-3id-blockchain-utils.svg?style=for-the-badge)](https://circleci.com/gh/ceramicnetwork/js-3id-blockchain-utils)
